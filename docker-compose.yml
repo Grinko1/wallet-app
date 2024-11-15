@@ -1,0 +1,28 @@
+version: '3'
+volumes:
+  pg_demo:
+
+services:
+  postgres:
+    image: postgres
+    container_name: 'wallet-db'
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=wallet_db
+    volumes:
+      - pg_demo:/var/lib/postgres/data
+    ports:
+      - "127.0.0.1:5434:5432"
+  app:
+    build: ./
+    container_name: 'java-app'
+    ports:
+      - "127.0.0.1:8080:8080"
+
+    restart: always
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: 'jdbc:postgresql://postgres:5432/wallet_db'
