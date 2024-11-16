@@ -21,14 +21,16 @@ public class WalletController {
 
     @GetMapping("wallets")
     public ResponseEntity<List<Wallet>> getAllWallets() {
-       return ResponseEntity.status(HttpStatus.OK).body(service.findAllWallets());
+        return ResponseEntity.status(HttpStatus.OK).body(service.findAllWallets());
     }
+
     @GetMapping("wallets/{WALLET_UUID}")
-    public ResponseEntity<ResponseDto> getWalletBalance(@PathVariable("WALLET_UUID") UUID id){
+    public ResponseEntity<ResponseDto> getWalletBalance(@PathVariable("WALLET_UUID") UUID id) {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(service.findWalletById(id)));
     }
+
     @PostMapping("wallet")
-    public ResponseEntity<String> updateBalance(@Valid @RequestBody RequestDto dto){
-        return ResponseEntity.status(HttpStatus.OK).body( service.updateWalletBalance(dto));
+    public ResponseEntity<String> updateBalance(@Valid @RequestBody RequestDto dto) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.updateWalletBalance(dto));
     }
 }

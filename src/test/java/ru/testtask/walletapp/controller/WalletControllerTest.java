@@ -40,7 +40,7 @@ public class WalletControllerTest {
         List<Wallet> walletList = Arrays.asList(wallet1, wallet2);
 
         when(walletService.findAllWallets()).thenReturn(walletList);
-K
+
         mockMvc.perform(get("/api/v1/wallets")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
