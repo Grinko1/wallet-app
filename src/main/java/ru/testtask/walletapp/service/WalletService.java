@@ -8,7 +8,9 @@ import java.util.UUID;
 
 public interface WalletService {
     Double findWalletById(UUID id);
-    List<Wallet> findAllWallets();
-    void updateWalletBalance(RequestDto wallet);
 
+    List<Wallet> findAllWallets();
+
+    String updateWalletBalance(RequestDto wallet);
 }
+

@@ -29,7 +29,6 @@ public class WalletController {
     }
     @PostMapping("wallet")
     public ResponseEntity<String> updateBalance(@Valid @RequestBody RequestDto dto){
-        service.updateWalletBalance(dto);
-        return ResponseEntity.status(HttpStatus.OK).body("Баланс кошелька обновлён");
+        return ResponseEntity.status(HttpStatus.OK).body( service.updateWalletBalance(dto));
     }
 }

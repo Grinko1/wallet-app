@@ -22,5 +22,4 @@ public class RequestDto {
     @NotNull(message = "Сумма не может быть пустой")
     @Positive(message = "Сумма должна быть больше 0")
     private Long amount;
-
 }

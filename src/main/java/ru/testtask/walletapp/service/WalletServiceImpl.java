@@ -11,6 +11,7 @@ import ru.testtask.walletapp.model.OperationType;
 import ru.testtask.walletapp.model.Wallet;
 import ru.testtask.walletapp.repository.WalletRepository;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,25 +31,28 @@ public class WalletServiceImpl implements WalletService {
         return repository.findAll();
     }
 
-
     @Override
     @Transactional
-    public void updateWalletBalance(RequestDto dto) {
+    public String updateWalletBalance(RequestDto dto) {
         if (dto.getOperationType() != OperationType.DEPOSIT && dto.getOperationType() != OperationType.WITHDRAW){
             throw new InvalidOperationTypeException("Неверный тип операции! Допустимые типы: 'DEPOSIT' или 'WITHDRAW'.");
 
         }
+        String response;
         Wallet existingWallet = repository.findById(dto.getValletId()).orElseThrow(()->new NotFoundException("Кошелек ", "WalletId", dto.getValletId()));
         Double currentBalance = existingWallet.getBalance();
         if (dto.getOperationType() == OperationType.DEPOSIT){
             existingWallet.setBalance(currentBalance + dto.getAmount());
+            response= "Пополнение на %d. Баланс: %s".formatted(dto.getAmount(), currentBalance);
         }else{
             if (currentBalance - dto.getAmount() < 0){
                 throw new InsufficientFundsException("Недостаточно средств на счете. Баланс: " + currentBalance);
             }
             existingWallet.setBalance(currentBalance - dto.getAmount());
+            response = "Снятие %d. Баланс: %s".formatted(dto.getAmount(), currentBalance);
         }
             repository.save(existingWallet);
+        return response;
     }
 
 

@@ -4,9 +4,8 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
 xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-<include file="v1/v1-create-product-table.xml" relativeToChangelogFile="true" />
+
     <include file="v1/v1-create-wallet-table.xml" relativeToChangelogFile="true" />
-    <include file="v1/v1-insert-into-product-data.xml" relativeToChangelogFile="true" />
     <include file="v1/v1-insert-into-wallet-mock-data.xml" relativeToChangelogFile="true" />
 
 </databaseChangeLog>
