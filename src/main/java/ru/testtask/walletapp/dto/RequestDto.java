@@ -1,7 +1,11 @@
 package ru.testtask.walletapp.dto;
 
+
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.*;
 import ru.testtask.walletapp.model.OperationType;
+import ru.testtask.walletapp.validation.ValidOperationType;
 
 import java.util.UUID;
 
@@ -11,8 +15,12 @@ import java.util.UUID;
 @NoArgsConstructor
 @ToString
 public class RequestDto {
-    private UUID walletId;
-    private OperationType operation;
+    @NotNull(message = "Wallet ID не может быть пустым")
+    private UUID valletId;
+    @NotNull(message = "Операция не может быть пустой")
+    private OperationType operationType;
+    @NotNull(message = "Сумма не может быть пустой")
+    @Positive(message = "Сумма должна быть больше 0")
     private Long amount;
 
 }

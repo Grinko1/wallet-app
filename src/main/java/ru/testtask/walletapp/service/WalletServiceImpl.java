@@ -4,6 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.testtask.walletapp.dto.RequestDto;
+import ru.testtask.walletapp.exceptions.InsufficientFundsException;
+import ru.testtask.walletapp.exceptions.InvalidOperationTypeException;
+import ru.testtask.walletapp.exceptions.NotFoundException;
 import ru.testtask.walletapp.model.OperationType;
 import ru.testtask.walletapp.model.Wallet;
 import ru.testtask.walletapp.repository.WalletRepository;
@@ -18,8 +21,7 @@ public class WalletServiceImpl implements WalletService {
 
     @Override
     public Double findWalletById(UUID id) {
-        //Not found exp
-        Wallet wallet = repository.findById(id).orElseThrow();
+        Wallet wallet = repository.findById(id).orElseThrow(()->new NotFoundException("Кошелек ", "WalletId", id));
         return wallet.getBalance();
     }
 
@@ -32,15 +34,19 @@ public class WalletServiceImpl implements WalletService {
     @Override
     @Transactional
     public void updateWalletBalance(RequestDto dto) {
-        Wallet existingWallet = repository.findById(dto.getWalletId()).orElseThrow();
+        if (dto.getOperationType() != OperationType.DEPOSIT && dto.getOperationType() != OperationType.WITHDRAW){
+            throw new InvalidOperationTypeException("Неверный тип операции! Допустимые типы: 'DEPOSIT' или 'WITHDRAW'.");
+
+        }
+        Wallet existingWallet = repository.findById(dto.getValletId()).orElseThrow(()->new NotFoundException("Кошелек ", "WalletId", dto.getValletId()));
         Double currentBalance = existingWallet.getBalance();
-        if (dto.getOperation() == OperationType.DEPOSIT){
+        if (dto.getOperationType() == OperationType.DEPOSIT){
             existingWallet.setBalance(currentBalance + dto.getAmount());
         }else{
             if (currentBalance - dto.getAmount() < 0){
-                System.out.println("Не достаточно средств!" + " Баланс: "+ currentBalance);;
+                throw new InsufficientFundsException("Недостаточно средств на счете. Баланс: " + currentBalance);
             }
-            existingWallet.setBalance(currentBalance + dto.getAmount());
+            existingWallet.setBalance(currentBalance - dto.getAmount());
         }
             repository.save(existingWallet);
     }
