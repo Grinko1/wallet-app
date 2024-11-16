@@ -1,18 +1,14 @@
 package ru.testtask.walletapp.service;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import ru.testtask.walletapp.dto.RequestDto;
 import ru.testtask.walletapp.model.Wallet;
-import ru.testtask.walletapp.repository.WalletRepository;
 
 import java.util.List;
+import java.util.UUID;
 
-@Service
-@RequiredArgsConstructor
-public class WalletService {
-    private final WalletRepository repository;
+public interface WalletService {
+    Double findWalletById(UUID id);
+    List<Wallet> findAllWallets();
+    void updateWalletBalance(RequestDto wallet);
 
-    public List<Wallet> findAll(){
-        return repository.findAll();
-    }
 }

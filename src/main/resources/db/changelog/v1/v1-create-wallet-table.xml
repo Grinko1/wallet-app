@@ -10,7 +10,7 @@
             <column name="id" type="uuid" defaultValueComputed="gen_random_uuid()">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="amount" type="decimal">
+            <column name="balance" type="decimal">
                 <constraints nullable="false"/>
             </column>
         </createTable>

@@ -7,16 +7,25 @@
     <changeSet
                id="2024-11-15-insertwallet" author="grinko">
         <insert tableName="wallet">
-            <column  name="amount"  value="100500"/>
+            <column  name="balance"  value="200000"/>
         </insert>
         <insert tableName="wallet">
-            <column  name="amount"  value="10"/>
+            <column  name="balance"  value="456"/>
         </insert>
         <insert tableName="wallet">
-            <column  name="amount"  value="230"/>
+            <column  name="balance"  value="0"/>
         </insert>
         <insert tableName="wallet">
-            <column  name="amount"  value="123.56"/>
+            <column  name="balance"  value="99.99"/>
+        </insert>
+        <insert tableName="wallet">
+            <column  name="balance"  value="10"/>
+        </insert>
+        <insert tableName="wallet">
+            <column  name="balance"  value="1"/>
+        </insert>
+        <insert tableName="wallet">
+            <column  name="balance"  value="500.01"/>
         </insert>
     </changeSet>
 </databaseChangeLog>

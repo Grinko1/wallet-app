@@ -19,5 +19,5 @@ public class Wallet {
     @JsonProperty("id")
     private UUID id;
     @Column
-    private double amount;
+    private double balance;
 }
