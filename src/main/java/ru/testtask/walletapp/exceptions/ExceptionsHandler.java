@@ -25,7 +25,7 @@ public class ExceptionsHandler {
     }
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<Object> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
-        // ошибка связана с UUID
+        // ошибка UUID
         if (ex.getMessage().contains("UUID")) {
             return new ResponseEntity<>(
                     new ErrorResponse("Неправильный формат ID. UUID должен быть в формате 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'"),
